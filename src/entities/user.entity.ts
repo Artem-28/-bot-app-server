@@ -7,7 +7,7 @@ import { Exclude } from 'class-transformer';
 // Service
 
 // Entity
-import { BaseEntity } from '@/common';
+import { BaseEntity } from '@/common/base';
 
 // Guard
 

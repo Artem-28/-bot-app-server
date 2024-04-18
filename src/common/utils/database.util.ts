@@ -2,7 +2,7 @@ import {
   HCreateTable,
   HCreateTableColumns,
   HCreateTableOptions,
-} from '@/common';
+} from '@/common/types';
 import { TableColumn, Table } from 'typeorm';
 
 export const hCreateTable: HCreateTable = (name, columns, options?) => {

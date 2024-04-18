@@ -1,5 +1,5 @@
 import { DataSource, EntityManager, Repository } from 'typeorm';
-import { ENTITY_MANAGER_KEY } from '@/common';
+import { ENTITY_MANAGER_KEY } from '@/common/interceptors';
 
 export class BaseRepository {
   constructor(

@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
-import { hCreateTable } from '@/common';
+import { hCreateTable } from '@/common/utils';
 
 const TABLE_NAME = 'users';
 
