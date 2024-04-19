@@ -1,5 +1,4 @@
-import { IUser } from '@/modules/user/domain';
-import { UserAggregate } from '@/modules/user/domain/user.aggregate';
+import { IUser, UserAggregate } from '@/modules/user/domain';
 
 export abstract class UserRepositoryDomain {
   abstract create(user: IUser): Promise<UserAggregate>;

@@ -1,11 +1,11 @@
-import { BaseRepository } from '@/common/base';
 import { Inject, Injectable, Scope } from '@nestjs/common';
+import { BaseRepository } from '@/common/base';
 import { DataSource } from 'typeorm';
 import { REQUEST } from '@nestjs/core';
-import { UserRepositoryDomain } from '@/repositories/user/user-repository.domain';
-import { IUser } from '@/modules/user/domain';
-import { UserEntity } from '@/entities/user.entity';
-import { UserAggregate } from '@/modules/user/domain/user.aggregate';
+import { UserEntity } from '@/entities';
+import { UserRepositoryDomain } from '@/repositories/user';
+import { IUser, UserAggregate } from '@/modules/user/domain';
+
 
 @Injectable({ scope: Scope.REQUEST })
 export class UserRepository
