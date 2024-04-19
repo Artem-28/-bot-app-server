@@ -11,7 +11,7 @@ import {
   validateSync,
 } from 'class-validator';
 import { Exclude } from 'class-transformer';
-import { IUser } from '@/modules/auth/domain/index';
+import { IUser } from '@/modules/user/domain/index';
 import { DomainError } from '@/common/error';
 
 export class UserAggregate extends UserCommand implements IUser {

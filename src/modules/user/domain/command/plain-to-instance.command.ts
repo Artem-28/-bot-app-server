@@ -1,5 +1,5 @@
 import { validateSync } from 'class-validator';
-import { IUser } from '@/modules/auth/domain';
+import { IUser } from '@/modules/user/domain';
 
 export interface PlainToInstance {
   plainToInstance(this: IUser): void;
