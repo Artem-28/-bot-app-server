@@ -21,7 +21,11 @@ export class CreateConfirmCodeTable1713520004421 implements MigrationInterface {
         type: 'varchar',
       },
       {
-        name: 'expiration_date',
+        name: 'live_at',
+        type: 'timestamp',
+      },
+      {
+        name: 'delay_at',
         type: 'timestamp',
       },
     ]);

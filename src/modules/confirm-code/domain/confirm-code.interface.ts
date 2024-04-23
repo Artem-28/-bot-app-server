@@ -16,7 +16,10 @@ export interface IConfirmCode {
   destination: string;
 
   /** Срок действия кода */
-  expirationDate: Date;
+  liveAt: Date;
+
+  /** Задержка для отправки */
+  delayAt: Date;
 
   /** Дата создания кода */
   createdAt: Date;

@@ -1,19 +1,6 @@
 import { Column, Entity } from 'typeorm';
 import { Exclude } from 'class-transformer';
-// Module
-
-// Controller
-
-// Service
-
-// Entity
-import { BaseEntity } from '@/common/base';
-
-// Guard
-
-// Types
-
-// Helper
+import { BaseEntity } from '@/entities/base.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {

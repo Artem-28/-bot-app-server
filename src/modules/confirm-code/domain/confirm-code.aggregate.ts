@@ -1,4 +1,4 @@
-import { ConfirmCodeCommand } from '@/modules/confirm-code/domain/command';
+import { ConfirmCodeCommand } from '@/modules/confirm-code/domain/confirm-code.command';
 import {
   ConfirmCodeTypeEnum,
   IConfirmCode,
@@ -14,6 +14,7 @@ import {
   validateSync,
 } from 'class-validator';
 import { DomainError } from '@/common/error';
+import { Expose } from 'class-transformer';
 
 export class ConfirmCodeAggregate
   extends ConfirmCodeCommand
@@ -43,9 +44,11 @@ export class ConfirmCodeAggregate
 
   /** Срок действия кода */
   @IsDate()
-  @IsNotEmpty()
-  @IsDefined()
-  expirationDate: Date;
+  liveAt = new Date();
+
+  /** Задержка отправки */
+  @IsDate()
+  delayAt = new Date();
 
   /** Дата создания кода */
   @IsDate()
@@ -57,6 +60,19 @@ export class ConfirmCodeAggregate
 
   private constructor() {
     super();
+  }
+
+  @Expose()
+  get live(): boolean {
+    const timestamp = new Date().getTime();
+    const liveTimestamp = new Date(this.liveAt).getTime();
+    return timestamp < liveTimestamp;
+  }
+
+  get delay(): boolean {
+    const timestamp = new Date().getTime();
+    const delayTimestamp = new Date(this.delayAt).getTime();
+    return timestamp < delayTimestamp;
   }
 
   static create(data: Partial<IConfirmCode>) {

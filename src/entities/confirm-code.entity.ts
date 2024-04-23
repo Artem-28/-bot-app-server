@@ -1,9 +1,12 @@
 import { Column, Entity } from 'typeorm';
-import { BaseEntity } from '@/common/base';
-import { ConfirmCodeTypeEnum } from '@/modules/confirm-code/domain';
+import { BaseEntity } from '@/entities/base.entity';
+import {
+  ConfirmCodeTypeEnum,
+  IConfirmCode,
+} from '@/modules/confirm-code/domain';
 
 @Entity({ name: 'confirm_codes' })
-export class ConfirmCodeEntity extends BaseEntity {
+export class ConfirmCodeEntity extends BaseEntity implements IConfirmCode {
   @Column()
   value: string;
 
@@ -13,6 +16,9 @@ export class ConfirmCodeEntity extends BaseEntity {
   @Column()
   destination: string;
 
-  @Column({ name: 'expiration_date' })
-  expirationDate: Date;
+  @Column({ name: 'live_at' })
+  liveAt: Date;
+
+  @Column({ name: 'delay_at' })
+  delayAt: Date;
 }
