@@ -19,4 +19,8 @@ export class ConfirmCodeCommand {
     const timestamp = new Date().getTime();
     this.delayAt = new Date(timestamp + time * 1000);
   }
+
+  confirm(this, value: string): void {
+    this.confirmed = this.value === value;
+  }
 }
