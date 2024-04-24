@@ -1,4 +1,3 @@
-import { UserCommand } from './command';
 import {
   IsBoolean,
   IsDate,
@@ -11,8 +10,9 @@ import {
   validateSync,
 } from 'class-validator';
 import { Exclude } from 'class-transformer';
-import { IUser } from '@/modules/user/domain/index';
 import { DomainError } from '@/common/error';
+import { UserCommand } from '@/modules/user/domain/user.command';
+import { IUser } from '@/modules/user/domain/user.interface';
 
 export class UserAggregate extends UserCommand implements IUser {
   @IsOptional()
@@ -68,5 +68,19 @@ export class UserAggregate extends UserCommand implements IUser {
       throw new DomainError(errors, { message: 'User not valid ' });
     }
     return _user;
+  }
+
+  get instance(): IUser {
+    return {
+      email: this.email,
+      password: this.password,
+      phone: this.phone,
+      emailVerifiedAt: this.emailVerifiedAt,
+      phoneVerifiedAt: this.phoneVerifiedAt,
+      lastActiveAt: this.lastActiveAt,
+      licenseAgreement: this.licenseAgreement,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    };
   }
 }

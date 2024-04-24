@@ -10,4 +10,5 @@ export abstract class ConfirmCodeRepositoryDomain {
   abstract getOne(
     filter: FilterDto | FilterDto[],
   ): Promise<ConfirmCodeAggregate | null>;
+  abstract remove(id: number): Promise<boolean>;
 }

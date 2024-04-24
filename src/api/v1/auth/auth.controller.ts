@@ -10,6 +10,6 @@ export class AuthController {
   @Post('registration')
   @UseInterceptors(TransactionInterceptor)
   public async registration(@Body() dtp: RegistrationDto) {
-    await this._authService.registration(dtp);
+    return await this._authService.registration(dtp);
   }
 }

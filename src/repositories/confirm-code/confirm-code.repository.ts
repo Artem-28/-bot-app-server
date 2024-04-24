@@ -51,4 +51,13 @@ export class ConfirmCodeRepository
     if (!result) return null;
     return ConfirmCodeAggregate.create(result);
   }
+
+  public async remove(id: number): Promise<boolean> {
+    const result = await this.getRepository(ConfirmCodeEntity)
+      .createQueryBuilder()
+      .delete()
+      .where({ id })
+      .execute();
+    return !!result.affected;
+  }
 }

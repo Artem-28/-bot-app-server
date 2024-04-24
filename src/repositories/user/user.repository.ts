@@ -16,7 +16,7 @@ export class UserRepository
   }
 
   public async create(user: IUser) {
-    const result = await this.getRepository(UserEntity).create(user);
+    const result = await this.getRepository(UserEntity).save(user);
     return UserAggregate.create(result);
   }
 }
