@@ -1,11 +1,10 @@
-import { IConfirmCode } from '@/modules/confirm-code/domain';
 import { IsDefined, IsNotEmpty, IsString } from 'class-validator';
 
-export class FilterDto {
+export class FilterDto<T> {
   @IsDefined()
   @IsString()
   @IsNotEmpty()
-  field: keyof IConfirmCode;
+  field: keyof T;
 
   @IsDefined()
   @IsNotEmpty()

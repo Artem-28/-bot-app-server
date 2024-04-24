@@ -1,12 +1,6 @@
-import {
-  IsBoolean,
-  IsDefined,
-  IsEmail,
-  IsString,
-  Length,
-} from 'class-validator';
+import { IsDefined, IsEmail, IsString, Length } from 'class-validator';
 
-export class RegistrationDto {
+export class ChangePasswordDto {
   @IsEmail()
   @IsDefined()
   email: string;
@@ -24,8 +18,4 @@ export class RegistrationDto {
   @IsDefined()
   @Length(6, 6)
   code: string;
-
-  @IsBoolean()
-  @IsDefined()
-  licenseAgreement: boolean;
 }

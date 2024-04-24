@@ -8,8 +8,8 @@ import {
   ConfirmCodeAggregate,
   IConfirmCode,
 } from '@/modules/confirm-code/domain';
-import { FilterDto } from '@/repositories/confirm-code/dto';
 import { HQueryBuilder } from '@/common/utils';
+import { FilterDto } from '@/common/dto';
 
 @Injectable({ scope: Scope.REQUEST })
 export class ConfirmCodeRepository
@@ -42,7 +42,7 @@ export class ConfirmCodeRepository
   }
 
   public async getOne(
-    filter: FilterDto | FilterDto[],
+    filter: FilterDto<IConfirmCode> | FilterDto<IConfirmCode>[],
   ): Promise<ConfirmCodeAggregate | null> {
     const repository = this.getRepository(ConfirmCodeEntity);
     const query = new HQueryBuilder(repository, { filter: filter });
