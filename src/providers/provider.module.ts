@@ -1,7 +1,13 @@
 import { Module } from '@nestjs/common';
-import { TypeormModule } from '@/providers/typeorm';
+import { appDataSource } from '@/providers/typeorm';
+import { mailingConfig } from '@/providers/mailing';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [TypeormModule],
+  imports: [
+    TypeOrmModule.forRoot(appDataSource.options),
+    MailerModule.forRoot(mailingConfig),
+  ],
 })
 export class ProviderModule {}

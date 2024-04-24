@@ -7,7 +7,7 @@ export class ResponseFactory {
   }
 
   static error(exception: any, host: ArgumentsHost) {
-    console.log('EXCEPTION', exception);
+    console.log('EXCEPTION FACTORY', exception);
     return new ErrorResponse(exception, host);
   }
 }

@@ -1,5 +1,6 @@
 export enum ConfirmCodeTypeEnum {
   REGISTRATION = 'registration',
+  UPDATE_PASSWORD = 'update_password',
 }
 
 export interface IConfirmCode {

@@ -14,7 +14,10 @@ export class CreateConfirmCodeTable1713520004421 implements MigrationInterface {
       {
         name: 'type',
         type: 'enum',
-        enum: [ConfirmCodeTypeEnum.REGISTRATION],
+        enum: [
+          ConfirmCodeTypeEnum.REGISTRATION,
+          ConfirmCodeTypeEnum.UPDATE_PASSWORD,
+        ],
       },
       {
         name: 'destination',

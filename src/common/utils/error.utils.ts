@@ -1,7 +1,7 @@
 import { CommonError } from '@/common/error';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { IError } from '@/common/types';
-import { EntityPropertyNotFoundError } from 'typeorm';
+import { EntityPropertyNotFoundError, QueryFailedError } from 'typeorm';
 
 export const getExceptionStatus = (exception: any): number => {
   if (exception instanceof CommonError) {
@@ -19,6 +19,10 @@ export const getExceptionErrors = (exception: any): IError[] => {
     return exception.getResponse();
   }
   if (exception instanceof EntityPropertyNotFoundError) {
+    errors.push({ ctx: 'app', field: null, message: exception.message });
+    return errors;
+  }
+  if (exception instanceof QueryFailedError) {
     errors.push({ ctx: 'app', field: null, message: exception.message });
     return errors;
   }

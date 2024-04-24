@@ -19,6 +19,11 @@ export class ConfirmCodeService {
       timeLive: 360,
       timeDelay: 120,
     },
+    [ConfirmCodeTypeEnum.UPDATE_PASSWORD]: {
+      mask: '######',
+      timeLive: 360,
+      timeDelay: 120,
+    },
   };
   constructor(private _confirmCodeRepository: ConfirmCodeRepository) {}
 
@@ -26,10 +31,10 @@ export class ConfirmCodeService {
     dto: CreateConfirmCodeDto,
   ): Promise<ConfirmCodeAggregate> {
     const { mask, timeDelay, timeLive } = this._codeOptions[dto.type];
-    const code = await this._confirmCodeRepository.getOne({
-      field: 'destination',
-      value: dto.destination,
-    });
+    const code = await this._confirmCodeRepository.getOne([
+      { field: 'destination', value: dto.destination },
+      { field: 'type', value: dto.type },
+    ]);
 
     if (!code) {
       const newCode = ConfirmCodeAggregate.create({
