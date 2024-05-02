@@ -4,6 +4,7 @@ import { AuthModule } from '@/modules/auth/auth.module';
 import { UserModule } from '@/modules/user/user.module';
 import { ConfirmCodeModule } from './modules/confirm-code/confirm-code.module';
 import { CommonModule } from '@/common/common.module';
+import { ProjectModule } from './modules/project/project.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { CommonModule } from '@/common/common.module';
     UserModule,
     AuthModule,
     ConfirmCodeModule,
+    ProjectModule,
   ],
 })
 export class AppModule {}

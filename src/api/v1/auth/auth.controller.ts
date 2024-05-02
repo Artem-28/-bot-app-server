@@ -20,8 +20,8 @@ export class AuthController {
   constructor(private _authService: AuthService) {}
 
   @Post('registration')
-  public async registration(@Body() dtp: RegistrationDto) {
-    return await this._authService.registration(dtp);
+  public async registration(@Body() dto: RegistrationDto) {
+    return await this._authService.registration(dto);
   }
 
   @Patch('change_password')

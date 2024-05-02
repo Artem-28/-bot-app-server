@@ -1,4 +1,4 @@
-import { Inject, Injectable, Scope } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { BaseRepository } from '@/repositories/base.repository';
 import { DataSource } from 'typeorm';
 import { REQUEST } from '@nestjs/core';

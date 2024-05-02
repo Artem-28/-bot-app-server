@@ -1,6 +1,7 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { BaseEntity } from '@/entities/base.entity';
+import { ProjectEntity } from '@/entities/project.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
@@ -25,4 +26,7 @@ export class UserEntity extends BaseEntity {
 
   @Column({ name: 'last_active_at', nullable: true })
   lastActiveAt: Date;
+
+  @OneToMany(() => ProjectEntity, (project) => project.user)
+  projects: ProjectEntity[];
 }

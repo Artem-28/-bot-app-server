@@ -126,9 +126,4 @@ export class AuthService {
       user,
     };
   }
-
-  public async getAuthUser(login: string) {
-    return null;
-    // return this._userRepository.getOne({ field: 'email', value: login });
-  }
 }
