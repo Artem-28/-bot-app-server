@@ -8,7 +8,7 @@ import { IUser, UserAggregate } from '@/modules/user/domain';
 import { FilterDto } from '@/common/dto';
 import { HQueryBuilder } from '@/common/utils';
 
-@Injectable({ scope: Scope.REQUEST })
+@Injectable()
 export class UserRepository
   extends BaseRepository
   implements UserRepositoryDomain

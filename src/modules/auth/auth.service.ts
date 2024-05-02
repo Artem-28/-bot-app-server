@@ -1,15 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from '@/repositories/user';
-import { ChangePasswordDto, RegistrationDto } from '@/api/v1/auth';
+import { ChangePasswordDto, RegistrationDto, SingInDto } from '@/api/v1/auth';
 import { ConfirmCodeRepository } from '@/repositories/confirm-code';
 import { ConfirmCodeTypeEnum } from '@/modules/confirm-code/domain';
 import { CommonError } from '@/common/error';
 import * as bcrypt from 'bcrypt';
 import { UserAggregate } from '@/modules/user/domain';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
+    private readonly _jwtService: JwtService,
     private readonly _userRepository: UserRepository,
     private readonly _confirmCodeRepository: ConfirmCodeRepository,
   ) {}
@@ -90,5 +92,43 @@ export class AuthService {
 
     await this._confirmCodeRepository.remove(code.id);
     return success;
+  }
+
+  public async signIn(dto: SingInDto) {
+    const user = await this._userRepository.getOne({
+      field: 'email',
+      value: dto.email,
+    });
+
+    if (!user) {
+      throw new CommonError({
+        field: 'email',
+        ctx: 'field',
+        message: 'errors.sing_in.email.invalid',
+      });
+    }
+
+    const passwordMatch = await bcrypt.compare(dto.password, user.password);
+
+    if (!passwordMatch) {
+      throw new CommonError({
+        field: 'email',
+        ctx: 'field',
+        message: 'errors.sing_in.email.invalid',
+      });
+    }
+
+    const payload = { username: user.email, id: user.id };
+
+    return {
+      accessToken: this._jwtService.sign(payload),
+      typeToken: 'Bearer',
+      user,
+    };
+  }
+
+  public async getAuthUser(login: string) {
+    return null;
+    // return this._userRepository.getOne({ field: 'email', value: login });
   }
 }

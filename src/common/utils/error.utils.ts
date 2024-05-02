@@ -26,6 +26,10 @@ export const getExceptionErrors = (exception: any): IError[] => {
     errors.push({ ctx: 'app', field: null, message: exception.message });
     return errors;
   }
+  if (exception instanceof Error) {
+    errors.push({ ctx: 'app', field: null, message: exception.message });
+    return errors;
+  }
   const response = exception.getResponse();
 
   if (!response) return errors;

@@ -3,10 +3,10 @@ import { AuthService } from './auth.service';
 import { UserRepository } from '@/repositories/user';
 import { AuthController } from '@/api/v1/auth';
 import { ConfirmCodeRepository } from '@/repositories/confirm-code';
+import { UserService } from '@/modules/user/user.service';
 
 @Module({
-  providers: [AuthService, UserRepository, ConfirmCodeRepository],
-  exports: [],
+  providers: [AuthService, UserRepository, ConfirmCodeRepository, UserService],
   controllers: [AuthController],
 })
 export class AuthModule {}
