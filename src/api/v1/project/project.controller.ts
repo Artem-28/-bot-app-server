@@ -12,6 +12,13 @@ import {
 import { ProjectService } from '@/modules/project/project.service';
 import { JwtGuard } from '@/providers/jwt';
 import { CreateProjectDto, UpdateProjectDto } from '@/api/v1/project/dto';
+import {
+  PermissionGuard,
+  Permission,
+  PROJECT_VIEW,
+  PROJECT_UPDATE,
+  PROJECT_REMOVE,
+} from '@/providers/permission';
 
 @Controller('api/v1/projects')
 @UseGuards(JwtGuard)
@@ -28,7 +35,16 @@ export class ProjectController {
     return await this._projectService.getAvailableUserProjects(req.user.id);
   }
 
+  @Get(':projectId')
+  @UseGuards(PermissionGuard)
+  @Permission(PROJECT_VIEW)
+  public async info(@Param() param) {
+    return await this._projectService.info(Number(param.projectId));
+  }
+
   @Patch(':projectId')
+  @UseGuards(PermissionGuard)
+  @Permission(PROJECT_UPDATE)
   public async update(@Param() param, @Body() dto: UpdateProjectDto) {
     return await this._projectService.update({
       id: Number(param.projectId),
@@ -37,6 +53,8 @@ export class ProjectController {
   }
 
   @Delete(':projectId')
+  @UseGuards(PermissionGuard)
+  @Permission(PROJECT_REMOVE)
   public async remove(@Param() param) {
     return await this._projectService.remove(Number(param.projectId));
   }

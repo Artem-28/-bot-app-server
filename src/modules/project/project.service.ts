@@ -66,4 +66,20 @@ export class ProjectService {
       value: userId,
     });
   }
+
+  public async info(id: number): Promise<ProjectAggregate> {
+    const project = await this._projectRepository.getOne({
+      field: 'id',
+      value: id,
+    });
+
+    if (!project) {
+      throw new CommonError(
+        { field: null, ctx: 'app', message: 'errors.project.not_found' },
+        404,
+      );
+    }
+
+    return project;
+  }
 }
