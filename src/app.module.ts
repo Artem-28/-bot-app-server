@@ -6,6 +6,7 @@ import { ConfirmCodeModule } from './modules/confirm-code/confirm-code.module';
 import { CommonModule } from '@/common/common.module';
 import { ProjectModule } from './modules/project/project.module';
 import { CheckPermissionModule } from '@/providers/permission';
+import { ScriptModule } from './modules/script/script.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { CheckPermissionModule } from '@/providers/permission';
     ConfirmCodeModule,
     ProjectModule,
     CheckPermissionModule,
+    ScriptModule,
   ],
 })
 export class AppModule {}

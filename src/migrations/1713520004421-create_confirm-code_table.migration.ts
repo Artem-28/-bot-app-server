@@ -1,10 +1,9 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import { hCreateTable } from '@/common/utils';
 import { ConfirmCodeTypeEnum } from '@/modules/confirm-code/domain';
+import { CONFIRM_CODE_TABLE } from '@/entities';
 
-const TABLE_NAME = 'confirm_codes';
-
-const table = hCreateTable(TABLE_NAME, [
+const table = hCreateTable(CONFIRM_CODE_TABLE, [
   {
     name: 'value',
     type: 'varchar',

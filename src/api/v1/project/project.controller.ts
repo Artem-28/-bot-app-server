@@ -47,8 +47,8 @@ export class ProjectController {
   @Permission(PROJECT_UPDATE)
   public async update(@Param() param, @Body() dto: UpdateProjectDto) {
     return await this._projectService.update({
-      id: Number(param.projectId),
       ...dto,
+      id: Number(param.projectId),
     });
   }
 

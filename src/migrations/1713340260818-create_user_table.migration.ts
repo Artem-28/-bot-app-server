@@ -1,9 +1,8 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import { hCreateTable } from '@/common/utils';
+import { USER_TABLE } from '@/entities';
 
-const TABLE_NAME = 'users';
-
-const table = hCreateTable(TABLE_NAME, [
+const table = hCreateTable(USER_TABLE, [
   {
     name: 'email',
     type: 'varchar',

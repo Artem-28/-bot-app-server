@@ -3,7 +3,9 @@ import { Exclude } from 'class-transformer';
 import { BaseEntity } from '@/entities/base.entity';
 import { ProjectEntity } from '@/entities/project.entity';
 
-@Entity({ name: 'users' })
+export const USER_TABLE = 'users';
+
+@Entity({ name: USER_TABLE })
 export class UserEntity extends BaseEntity {
   @Column()
   email: string;

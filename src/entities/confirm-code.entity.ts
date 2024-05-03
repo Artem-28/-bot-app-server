@@ -5,7 +5,9 @@ import {
   IConfirmCode,
 } from '@/modules/confirm-code/domain';
 
-@Entity({ name: 'confirm_codes' })
+export const CONFIRM_CODE_TABLE = 'confirm_codes';
+
+@Entity({ name: CONFIRM_CODE_TABLE })
 export class ConfirmCodeEntity extends BaseEntity implements IConfirmCode {
   @Column()
   value: string;

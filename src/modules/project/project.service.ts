@@ -10,7 +10,6 @@ export class ProjectService {
 
   public async create(dto: CreateProjectDto): Promise<ProjectAggregate> {
     const project = ProjectAggregate.create(dto);
-    project.plainToInstance();
     return await this._projectRepository.create(project.instance);
   }
 

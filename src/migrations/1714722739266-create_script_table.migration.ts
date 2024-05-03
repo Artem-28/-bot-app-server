@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, TableForeignKey } from 'typeorm';
 import { hCreateTable } from '@/common/utils';
-import { USER_TABLE, PROJECT_TABLE } from '@/entities';
+import { PROJECT_TABLE, SCRIPT_TABLE } from '@/entities';
 
-const table = hCreateTable(PROJECT_TABLE, [
+const table = hCreateTable(SCRIPT_TABLE, [
   {
-    name: 'user_id',
+    name: 'project_id',
     type: 'int',
   },
   {
@@ -13,17 +13,16 @@ const table = hCreateTable(PROJECT_TABLE, [
   },
 ]);
 
-export class CreateProjectTable1714638208810 implements MigrationInterface {
+export class CreateScriptTable1714722739266 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(table, true);
-
-    const userForeignKey = new TableForeignKey({
-      columnNames: ['user_id'],
+    const projectForeignKey = new TableForeignKey({
+      columnNames: ['project_id'],
       referencedColumnNames: ['id'],
-      referencedTableName: USER_TABLE,
+      referencedTableName: PROJECT_TABLE,
       onDelete: 'CASCADE',
     });
-    await queryRunner.createForeignKey(table, userForeignKey);
+    await queryRunner.createForeignKey('scripts', projectForeignKey);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
