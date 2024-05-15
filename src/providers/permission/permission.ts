@@ -37,3 +37,8 @@ export const SCRIPT_VIEW: AccessController = {
   permissions: [PermissionCommonEnum.ADMIN],
   operator: 'or',
 };
+
+export const RESPONDENT_CREATE: AccessController = {
+  permissions: [PermissionCommonEnum.ADMIN],
+  operator: 'or',
+};

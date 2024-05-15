@@ -46,6 +46,7 @@ export class ProjectAggregate extends ProjectCommand implements IProject {
 
   get instance(): IProject {
     return {
+      id: this.id,
       userId: this.userId,
       title: this.title,
       createdAt: this.createdAt,
