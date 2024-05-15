@@ -7,6 +7,7 @@ import { CommonModule } from '@/common/common.module';
 import { ProjectModule } from './modules/project/project.module';
 import { CheckPermissionModule } from '@/providers/permission';
 import { ScriptModule } from './modules/script/script.module';
+import { RespondentModule } from './modules/respondent/respondent.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ScriptModule } from './modules/script/script.module';
     ProjectModule,
     CheckPermissionModule,
     ScriptModule,
+    RespondentModule,
   ],
 })
 export class AppModule {}

@@ -22,7 +22,7 @@ export class CreateScriptTable1714722739266 implements MigrationInterface {
       referencedTableName: PROJECT_TABLE,
       onDelete: 'CASCADE',
     });
-    await queryRunner.createForeignKey('scripts', projectForeignKey);
+    await queryRunner.createForeignKey(table, projectForeignKey);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
