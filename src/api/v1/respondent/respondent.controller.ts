@@ -17,6 +17,9 @@ export class RespondentController {
   @Post()
   @Permission(RESPONDENT_CREATE)
   public async create(@Param() param, @Body() dto: CreateRespondentDto) {
-    return await this._respondentService.create(dto, Number(param.projectId));
+    return await this._respondentService.create({
+      ...dto,
+      projectId: Number(param.projectId),
+    });
   }
 }

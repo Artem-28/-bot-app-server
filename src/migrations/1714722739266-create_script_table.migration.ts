@@ -13,19 +13,24 @@ const table = hCreateTable(SCRIPT_TABLE, [
   },
 ]);
 
+const foreignKeys = [
+  new TableForeignKey({
+    name: 'fk_script_project',
+    columnNames: ['project_id'],
+    referencedColumnNames: ['id'],
+    referencedTableName: PROJECT_TABLE,
+    onDelete: 'CASCADE',
+  }),
+];
+
 export class CreateScriptTable1714722739266 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(table, true);
-    const projectForeignKey = new TableForeignKey({
-      columnNames: ['project_id'],
-      referencedColumnNames: ['id'],
-      referencedTableName: PROJECT_TABLE,
-      onDelete: 'CASCADE',
-    });
-    await queryRunner.createForeignKey(table, projectForeignKey);
+    await queryRunner.createForeignKeys(table, foreignKeys);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropForeignKeys(table, foreignKeys);
     await queryRunner.dropTable(table);
   }
 }

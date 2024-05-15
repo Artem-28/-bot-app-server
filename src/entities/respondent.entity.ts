@@ -1,14 +1,17 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '@/entities/base.entity';
 import { UUID } from 'crypto';
-import { ProjectRespondentEntity } from '@/entities/project-respondent.entity';
+import { ProjectEntity } from '@/entities/project.entity';
 
 export const RESPONDENT_TABLE = 'respondents';
 
 @Entity({ name: RESPONDENT_TABLE })
 export class RespondentEntity extends BaseEntity {
-  @Column({ unique: true })
+  @Column()
   public uuid: UUID;
+
+  @Column({ name: 'project_id' })
+  public projectId: number;
 
   @Column({ nullable: true })
   public name: string | null;
@@ -25,9 +28,9 @@ export class RespondentEntity extends BaseEntity {
   @Column({ nullable: true })
   public phone: string | null;
 
-  @OneToMany(
-    () => ProjectRespondentEntity,
-    (projectRespondent) => projectRespondent.respondent,
-  )
-  public projects: ProjectRespondentEntity[];
+  @ManyToOne(() => ProjectEntity, (project) => project.respondents, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'project_id' })
+  public project: ProjectEntity;
 }

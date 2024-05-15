@@ -13,20 +13,24 @@ const table = hCreateTable(PROJECT_TABLE, [
   },
 ]);
 
+const foreignKeys = [
+  new TableForeignKey({
+    name: 'fk_project_user',
+    columnNames: ['user_id'],
+    referencedColumnNames: ['id'],
+    referencedTableName: USER_TABLE,
+    onDelete: 'CASCADE',
+  }),
+];
+
 export class CreateProjectTable1714638208810 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(table, true);
-
-    const userForeignKey = new TableForeignKey({
-      columnNames: ['user_id'],
-      referencedColumnNames: ['id'],
-      referencedTableName: USER_TABLE,
-      onDelete: 'CASCADE',
-    });
-    await queryRunner.createForeignKey(table, userForeignKey);
+    await queryRunner.createForeignKeys(table, foreignKeys);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropForeignKeys(table, foreignKeys);
     await queryRunner.dropTable(table);
   }
 }

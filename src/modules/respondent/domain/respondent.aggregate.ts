@@ -1,5 +1,6 @@
 import {
   IsDate,
+  IsDefined,
   IsEmail,
   IsNotEmpty,
   IsNumber,
@@ -21,6 +22,10 @@ export class RespondentAggregate
   @IsOptional()
   @IsNumber()
   id?: number;
+
+  @IsDefined()
+  @IsNumber()
+  projectId: number;
 
   @IsOptional()
   @IsString()
@@ -71,6 +76,7 @@ export class RespondentAggregate
   get instance(): IRespondent {
     return {
       id: this.id,
+      projectId: this.projectId,
       uuid: this.uuid,
       name: this.name,
       lastName: this.lastName,

@@ -7,6 +7,9 @@ export interface IRespondent {
   /** Идентификатор респондента */
   id?: number;
 
+  /** Идентификатор проекта к которому пренадлежит респондент */
+  projectId: number;
+
   /** Имя респондента */
   name: string | null;
 

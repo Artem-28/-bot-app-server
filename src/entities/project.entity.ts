@@ -1,8 +1,10 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
-import { BaseEntity } from '@/entities/base.entity';
-import { UserEntity } from '@/entities/user.entity';
-import { ScriptEntity } from '@/entities/script.entity';
-import { ProjectRespondentEntity } from '@/entities/project-respondent.entity';
+import {
+  BaseEntity,
+  UserEntity,
+  ScriptEntity,
+  RespondentEntity,
+} from '@/entities';
 
 export const PROJECT_TABLE = 'projects';
 
@@ -21,9 +23,6 @@ export class ProjectEntity extends BaseEntity {
   @OneToMany(() => ScriptEntity, (script) => script.project)
   public scripts: ScriptEntity[];
 
-  @OneToMany(
-    () => ProjectRespondentEntity,
-    (projectRespondent) => projectRespondent.project,
-  )
-  public respondents: ProjectRespondentEntity[];
+  @OneToMany(() => RespondentEntity, (respondent) => respondent.project)
+  public respondents: RespondentEntity[];
 }
