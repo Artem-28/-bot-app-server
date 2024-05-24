@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { JwtGuard } from '@/providers/jwt';
-import { ScriptService } from '@/modules/script/script.service';
+import { ScriptService } from '@/modules/script/service';
 import {
   Permission,
   PermissionGuard,
@@ -18,7 +18,7 @@ import {
   SCRIPT_UPDATE,
   SCRIPT_VIEW,
 } from '@/providers/permission';
-import { CreateScriptDto, UpdateScriptDto } from '@/api/v1/script/dto';
+import { CreateScriptDto, UpdateScriptDto } from '@/modules/script/controller';
 
 @Controller('api/v1/projects/:projectId/scripts')
 @UseGuards(PermissionGuard)

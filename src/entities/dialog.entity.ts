@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { BaseEntity, RespondentEntity, ScriptEntity } from '@/entities';
+import { BaseEntity, RespondentEntity } from '@/entities';
 import { ProjectEntity } from '@/models/project';
+import { ScriptEntity } from '@/models/script';
 
 export const DIALOG_TABLE = 'dialogs';
 

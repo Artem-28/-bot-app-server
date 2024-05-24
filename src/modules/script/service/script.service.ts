@@ -4,8 +4,8 @@ import {
   CreateScriptDto,
   GetScriptDto,
   UpdateScriptDto,
-} from '@/modules/script/dto';
-import { ScriptAggregate } from '@/modules/script/domain';
+} from '@/modules/script/service';
+import { ScriptAggregate } from '@/models/script';
 import { CommonError } from '@/common/error';
 
 @Injectable()

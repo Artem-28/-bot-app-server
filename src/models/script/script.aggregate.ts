@@ -7,10 +7,9 @@ import {
   validateSync,
 } from 'class-validator';
 import { DomainError } from '@/common/error';
-import { ScriptCommand } from '@/modules/script/domain/script.command';
-import { IScript } from '@/modules/script/domain/script.interface';
+import { IScript } from '@/models/script';
 
-export class ScriptAggregate extends ScriptCommand implements IScript {
+export class ScriptAggregate implements IScript {
   @IsOptional()
   @IsNumber()
   id?: number;
@@ -28,10 +27,6 @@ export class ScriptAggregate extends ScriptCommand implements IScript {
 
   @IsDate()
   updatedAt = new Date();
-
-  private constructor() {
-    super();
-  }
 
   static create(data: Partial<IScript>) {
     const _script = new ScriptAggregate();
