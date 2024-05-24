@@ -3,13 +3,13 @@ import { ConfirmCodeRepository } from '@/repositories/confirm-code';
 import {
   CheckConfirmCodeDto,
   CreateConfirmCodeDto,
-} from '@/api/v1/confirm-code/dto';
+} from '@/modules/confirm-code/controller/dto';
 import { hGenerateCode } from '@/common/utils';
+import { CommonError } from '@/common/error';
 import {
   ConfirmCodeAggregate,
   ConfirmCodeTypeEnum,
-} from '@/modules/confirm-code/domain';
-import { CommonError } from '@/common/error';
+} from '@/models/confirm-code';
 
 @Injectable()
 export class ConfirmCodeService {

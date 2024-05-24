@@ -1,8 +1,5 @@
-import {
-  ConfirmCodeAggregate,
-  IConfirmCode,
-} from '@/modules/confirm-code/domain';
 import { FilterDto } from '@/common/dto';
+import { ConfirmCodeAggregate, IConfirmCode } from '@/models/confirm-code';
 
 export abstract class ConfirmCodeRepositoryDomain {
   abstract create(code: IConfirmCode): Promise<ConfirmCodeAggregate>;

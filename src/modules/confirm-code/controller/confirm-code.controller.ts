@@ -1,11 +1,11 @@
 import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
-import { ConfirmCodeService } from '@/modules/confirm-code/confirm-code.service';
+import { MailService } from '@/modules/mail/mail.service';
+import { TransactionInterceptor } from '@/common/interceptors';
+import { ConfirmCodeService } from '@/modules/confirm-code/service';
 import {
   CheckConfirmCodeDto,
   CreateConfirmCodeDto,
-} from '@/api/v1/confirm-code/dto';
-import { MailService } from '@/modules/mail/mail.service';
-import { TransactionInterceptor } from '@/common/interceptors';
+} from '@/modules/confirm-code/controller/dto';
 
 @Controller('api/v1/confirm-codes')
 export class ConfirmCodeController {

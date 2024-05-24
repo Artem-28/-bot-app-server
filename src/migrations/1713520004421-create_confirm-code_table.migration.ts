@@ -1,7 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import { hCreateTable } from '@/common/utils';
-import { ConfirmCodeTypeEnum } from '@/modules/confirm-code/domain';
-import { CONFIRM_CODE_TABLE } from '@/entities';
+import { CONFIRM_CODE_TABLE, ConfirmCodeTypeEnum } from '@/models/confirm-code';
 
 const table = hCreateTable(CONFIRM_CODE_TABLE, [
   {

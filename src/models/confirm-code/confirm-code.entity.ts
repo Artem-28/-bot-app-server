@@ -1,14 +1,11 @@
 import { Column, Entity } from 'typeorm';
-import { BaseEntity } from '@/entities/base.entity';
-import {
-  ConfirmCodeTypeEnum,
-  IConfirmCode,
-} from '@/modules/confirm-code/domain';
+import { BaseEntity } from '@/models/base';
+import { ConfirmCodeTypeEnum } from '@/models/confirm-code';
 
 export const CONFIRM_CODE_TABLE = 'confirm_codes';
 
 @Entity({ name: CONFIRM_CODE_TABLE })
-export class ConfirmCodeEntity extends BaseEntity implements IConfirmCode {
+export class ConfirmCodeEntity extends BaseEntity {
   @Column()
   value: string;
 

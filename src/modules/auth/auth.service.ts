@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { UserRepository } from '@/repositories/user';
 import { ChangePasswordDto, RegistrationDto, SingInDto } from '@/api/v1/auth';
 import { ConfirmCodeRepository } from '@/repositories/confirm-code';
-import { ConfirmCodeTypeEnum } from '@/modules/confirm-code/domain';
 import { CommonError } from '@/common/error';
 import * as bcrypt from 'bcrypt';
 import { UserAggregate } from '@/modules/user/domain';
 import { JwtService } from '@nestjs/jwt';
+import { ConfirmCodeTypeEnum } from '@/models/confirm-code';
 
 @Injectable()
 export class AuthService {

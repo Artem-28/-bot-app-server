@@ -1,5 +1,5 @@
 import { IsDefined, IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { ConfirmCodeTypeEnum } from '@/modules/confirm-code/domain';
+import { ConfirmCodeTypeEnum } from '@/models/confirm-code';
 
 export class CreateConfirmCodeDto {
   @IsEnum(ConfirmCodeTypeEnum)

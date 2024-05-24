@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ConfirmCodeService } from './confirm-code.service';
-import { ConfirmCodeController } from '@/api/v1/confirm-code';
+import { ConfirmCodeController } from '@/modules/confirm-code/controller';
+import { ConfirmCodeService } from '@/modules/confirm-code/service';
 import { ConfirmCodeRepository } from '@/repositories/confirm-code';
 import { MailService } from '@/modules/mail/mail.service';
 

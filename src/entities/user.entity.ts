@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import { Exclude } from 'class-transformer';
-import { BaseEntity } from '@/entities/base.entity';
+import { BaseEntity } from '@/models/base/base.entity';
 import { ProjectEntity } from '@/entities/project.entity';
 
 export const USER_TABLE = 'users';

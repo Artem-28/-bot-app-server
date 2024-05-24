@@ -1,12 +1,13 @@
+import { IBase } from '@/models/base';
+
 export enum ConfirmCodeTypeEnum {
   REGISTRATION = 'registration',
   UPDATE_PASSWORD = 'update_password',
 }
 
-export interface IConfirmCode {
-  /** Идентификатор кода */
-  id?: number;
+export type TValidateCodeField = 'confirmed' | 'delay' | 'live';
 
+export interface IConfirmCode extends IBase {
   /** Значение кода */
   value: string;
 
@@ -21,10 +22,4 @@ export interface IConfirmCode {
 
   /** Задержка для отправки */
   delayAt: Date;
-
-  /** Дата создания кода */
-  createdAt: Date;
-
-  /** Дата обновления кода */
-  updatedAt: Date;
 }

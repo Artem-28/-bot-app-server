@@ -1,8 +1,8 @@
-import { ConfirmCodeCommand } from '@/modules/confirm-code/domain/confirm-code.command';
 import {
   ConfirmCodeTypeEnum,
   IConfirmCode,
-} from '@/modules/confirm-code/domain/confirm-code.interface';
+  TValidateCodeField,
+} from '@/models/confirm-code/confirm-code.interface';
 import {
   IsBoolean,
   IsDate,
@@ -14,13 +14,11 @@ import {
   IsString,
   validateSync,
 } from 'class-validator';
-import { DomainError } from '@/common/error';
+import { CommonError, DomainError } from '@/common/error';
 import { Exclude, Expose } from 'class-transformer';
+import { hToArray } from '@/common/utils';
 
-export class ConfirmCodeAggregate
-  extends ConfirmCodeCommand
-  implements IConfirmCode
-{
+export class ConfirmCodeAggregate implements IConfirmCode {
   /** Идентификатор кода */
   @Exclude()
   @IsOptional()
@@ -64,10 +62,6 @@ export class ConfirmCodeAggregate
   @IsBoolean()
   confirmed = false;
 
-  private constructor() {
-    super();
-  }
-
   static create(data: Partial<IConfirmCode>) {
     const _confirmCode = new ConfirmCodeAggregate();
     Object.assign(_confirmCode, data);
@@ -103,5 +97,38 @@ export class ConfirmCodeAggregate
     const timestamp = new Date().getTime();
     const delayTimestamp = new Date(this.delayAt).getTime();
     return timestamp < delayTimestamp;
+  }
+
+  update(this, data: Partial<IConfirmCode>): void {
+    Object.assign(this, data);
+  }
+
+  setLiveTime(this, time: number): void {
+    const timestamp = new Date().getTime();
+    this.liveAt = new Date(timestamp + time * 1000);
+  }
+
+  setDelayTime(this, time: number): void {
+    const timestamp = new Date().getTime();
+    this.delayAt = new Date(timestamp + time * 1000);
+  }
+
+  confirm(this, value: string): void {
+    this.confirmed = this.value === value;
+  }
+
+  validate(
+    this: ConfirmCodeAggregate,
+    throwExceptionField: TValidateCodeField | TValidateCodeField[],
+  ) {
+    hToArray(throwExceptionField).forEach((field) => {
+      const valid = this[field];
+      if (valid) return;
+      throw new CommonError({
+        ctx: 'field',
+        field: 'code',
+        message: `errors.confirm_code.${field}`,
+      });
+    });
   }
 }
