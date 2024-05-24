@@ -1,7 +1,6 @@
-export interface IUser {
-  /** Идентификатор пользователя */
-  id?: number;
+import { IBase } from '@/models/base';
 
+export interface IUser extends IBase {
   /** Email пользователя */
   email: string;
 
@@ -22,10 +21,4 @@ export interface IUser {
 
   /** Дата последней активности пользователя */
   lastActiveAt: Date | null;
-
-  /** Дата создания пользователя */
-  createdAt: Date;
-
-  /** Дата обновления пользователя */
-  updatedAt: Date;
 }

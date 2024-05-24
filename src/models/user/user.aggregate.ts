@@ -11,10 +11,9 @@ import {
 } from 'class-validator';
 import { Exclude } from 'class-transformer';
 import { DomainError } from '@/common/error';
-import { UserCommand } from '@/modules/user/domain/user.command';
-import { IUser } from '@/modules/user/domain/user.interface';
+import { IUser } from '@/models/user';
 
-export class UserAggregate extends UserCommand implements IUser {
+export class UserAggregate implements IUser {
   @IsOptional()
   @IsNumber()
   id?: number;
@@ -55,10 +54,6 @@ export class UserAggregate extends UserCommand implements IUser {
   @IsDate()
   updatedAt = new Date();
 
-  private constructor() {
-    super();
-  }
-
   static create(data: Partial<IUser>) {
     const _user = new UserAggregate();
     Object.assign(_user, data);
@@ -82,5 +77,9 @@ export class UserAggregate extends UserCommand implements IUser {
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     };
+  }
+
+  verifyEmail(this: IUser) {
+    this.emailVerifiedAt = new Date();
   }
 }

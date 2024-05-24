@@ -1,11 +1,11 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import {
   BaseEntity,
-  UserEntity,
   ScriptEntity,
   RespondentEntity,
   DialogEntity,
 } from '@/entities';
+import { UserEntity } from '@/models/user';
 
 export const PROJECT_TABLE = 'projects';
 

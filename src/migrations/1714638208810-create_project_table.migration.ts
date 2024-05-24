@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner, TableForeignKey } from 'typeorm';
 import { hCreateTable } from '@/common/utils';
-import { USER_TABLE, PROJECT_TABLE } from '@/entities';
+import { PROJECT_TABLE } from '@/entities';
+import { USER_TABLE } from '@/models/user';
 
 const table = hCreateTable(PROJECT_TABLE, [
   {

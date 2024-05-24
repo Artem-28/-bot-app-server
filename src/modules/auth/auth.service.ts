@@ -4,9 +4,9 @@ import { ChangePasswordDto, RegistrationDto, SingInDto } from '@/api/v1/auth';
 import { ConfirmCodeRepository } from '@/repositories/confirm-code';
 import { CommonError } from '@/common/error';
 import * as bcrypt from 'bcrypt';
-import { UserAggregate } from '@/modules/user/domain';
 import { JwtService } from '@nestjs/jwt';
 import { ConfirmCodeTypeEnum } from '@/models/confirm-code';
+import { UserAggregate } from '@/models/user';
 
 @Injectable()
 export class AuthService {
@@ -48,7 +48,6 @@ export class AuthService {
       licenseAgreement: dto.licenseAgreement,
     });
     aggregate.verifyEmail();
-    aggregate.plainToInstance();
 
     const user = await this._userRepository.create(aggregate.instance);
 

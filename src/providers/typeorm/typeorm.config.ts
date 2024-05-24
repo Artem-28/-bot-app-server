@@ -14,7 +14,7 @@ const options = (): DataSourceOptions => {
     username: configService.get('MYSQL_USER'),
     password: configService.get<string>('MYSQL_PASSWORD'),
     database: configService.get<string>('MYSQL_DATABASE'),
-    entities: [join(process.cwd(), 'dist', 'entities', '**', '*.entity.js')],
+    entities: [join(process.cwd(), 'dist', 'models', '**', '*.entity.js')],
     migrations: [
       join(process.cwd(), 'dist', 'migrations', '**', '*.migration.js'),
     ],
