@@ -7,12 +7,12 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { AuthService } from '@/modules/auth/auth.service';
+import { AuthService } from '@/modules/auth/service/auth.service';
 import {
   ChangePasswordDto,
   RegistrationDto,
   SingInDto,
-} from '@/api/v1/auth/dto';
+} from '@/modules/auth/controller/dto';
 import { JwtGuard } from '@/providers/jwt/jwt.guard';
 
 @Controller('api/v1/auth')

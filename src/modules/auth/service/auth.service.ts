@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from '@/repositories/user';
-import { ChangePasswordDto, RegistrationDto, SingInDto } from '@/api/v1/auth';
+import { ChangePasswordDto, RegistrationDto, SingInDto } from '@/modules/auth/controller';
 import { ConfirmCodeRepository } from '@/repositories/confirm-code';
 import { CommonError } from '@/common/error';
 import * as bcrypt from 'bcrypt';
