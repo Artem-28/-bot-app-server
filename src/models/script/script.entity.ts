@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
-import { BaseEntity, DialogEntity } from '@/entities';
+import { DialogEntity } from '@/entities';
 import { ProjectEntity } from '@/models/project';
+import { BaseEntity } from '@/models/base';
 
 export const SCRIPT_TABLE = 'scripts';
 

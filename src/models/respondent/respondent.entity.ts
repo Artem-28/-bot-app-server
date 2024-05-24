@@ -1,7 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
-import { BaseEntity, DialogEntity } from '@/entities';
+import { DialogEntity } from '@/entities';
 import { UUID } from 'crypto';
 import { ProjectEntity } from '@/models/project';
+import { BaseEntity } from '@/models/base';
 
 export const RESPONDENT_TABLE = 'respondents';
 
