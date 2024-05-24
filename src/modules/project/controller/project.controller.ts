@@ -9,9 +9,12 @@ import {
   Get,
   Delete,
 } from '@nestjs/common';
-import { ProjectService } from '@/modules/project/project.service';
+import { ProjectService } from '@/modules/project/service';
+import {
+  CreateProjectDto,
+  UpdateProjectDto,
+} from '@/modules/project/controller';
 import { JwtGuard } from '@/providers/jwt';
-import { CreateProjectDto, UpdateProjectDto } from '@/api/v1/project/dto';
 import {
   PermissionGuard,
   Permission,

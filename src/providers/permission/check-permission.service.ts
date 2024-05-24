@@ -5,8 +5,8 @@ import {
   AccessControllerEnum,
   PermissionCommonEnum,
 } from '@/providers/permission/permission.type';
-import { IProject, ProjectAggregate } from '@/modules/project/domain';
 import { FilterDto } from '@/common/dto';
+import { IProject, ProjectAggregate } from '@/models/project';
 
 @Injectable()
 export class CheckPermissionService {

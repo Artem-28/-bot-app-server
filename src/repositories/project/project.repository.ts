@@ -3,10 +3,9 @@ import { BaseRepository } from '@/repositories/base.repository';
 import { DataSource } from 'typeorm';
 import { REQUEST } from '@nestjs/core';
 import { ProjectRepositoryDomain } from '@/repositories/project/project-repository.domain';
-import { IProject, ProjectAggregate } from '@/modules/project/domain';
-import { ProjectEntity } from '@/entities/project.entity';
 import { FilterDto } from '@/common/dto';
 import { HQueryBuilder } from '@/common/utils';
+import { IProject, ProjectAggregate, ProjectEntity } from '@/models/project';
 
 @Injectable()
 export class ProjectRepository

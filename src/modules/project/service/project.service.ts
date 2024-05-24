@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProjectDto, UpdateProjectDto } from '@/modules/project/dto';
+import {
+  CreateProjectDto,
+  UpdateProjectDto,
+} from '@/modules/project/service/dto';
 import { ProjectRepository } from '@/repositories/project';
-import { ProjectAggregate } from '@/modules/project/domain';
 import { CommonError } from '@/common/error';
+import { ProjectAggregate } from '@/models/project';
 
 @Injectable()
 export class ProjectService {

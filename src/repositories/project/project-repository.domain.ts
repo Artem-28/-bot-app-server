@@ -1,5 +1,5 @@
-import { IProject, ProjectAggregate } from '@/modules/project/domain';
 import { FilterDto } from '@/common/dto';
+import { IProject, ProjectAggregate } from '@/models/project';
 
 export abstract class ProjectRepositoryDomain {
   abstract create(project: IProject): Promise<ProjectAggregate>;

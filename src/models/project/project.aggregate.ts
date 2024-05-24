@@ -1,5 +1,3 @@
-import { ProjectCommand } from '@/modules/project/domain/project.command';
-import { IProject } from '@/modules/project/domain/project.interface';
 import {
   IsDate,
   IsDefined,
@@ -9,8 +7,9 @@ import {
   validateSync,
 } from 'class-validator';
 import { DomainError } from '@/common/error';
+import { IProject } from '@/models/project/project.interface';
 
-export class ProjectAggregate extends ProjectCommand implements IProject {
+export class ProjectAggregate implements IProject {
   @IsOptional()
   @IsNumber()
   id?: number;
@@ -28,10 +27,6 @@ export class ProjectAggregate extends ProjectCommand implements IProject {
 
   @IsDate()
   updatedAt = new Date();
-
-  private constructor() {
-    super();
-  }
 
   static create(data: Partial<IProject>) {
     const _project = new ProjectAggregate();
