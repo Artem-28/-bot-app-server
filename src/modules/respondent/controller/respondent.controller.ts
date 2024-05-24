@@ -5,8 +5,8 @@ import {
   RESPONDENT_CREATE,
 } from '@/providers/permission';
 import { JwtGuard } from '@/providers/jwt';
-import { RespondentService } from '@/modules/respondent/respondent.service';
-import { CreateRespondentDto } from '@/api/v1/respondent/dto';
+import { RespondentService } from '@/modules/respondent/service';
+import { CreateRespondentDto } from '@/modules/respondent/controller';
 
 @Controller('api/v1/projects/:projectId/respondents')
 @UseGuards(PermissionGuard)

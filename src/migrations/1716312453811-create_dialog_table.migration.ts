@@ -1,8 +1,9 @@
 import { MigrationInterface, QueryRunner, TableForeignKey } from 'typeorm';
 import { hCreateTable } from '@/common/utils';
-import { DIALOG_TABLE, RESPONDENT_TABLE } from '@/entities';
+import { DIALOG_TABLE } from '@/entities';
 import { PROJECT_TABLE } from '@/models/project';
 import { SCRIPT_TABLE } from '@/models/script';
+import { RESPONDENT_TABLE } from '@/models/respondent';
 
 const table = hCreateTable(DIALOG_TABLE, [
   {

@@ -9,13 +9,10 @@ import {
   validateSync,
 } from 'class-validator';
 import { DomainError } from '@/common/error';
-import { RespondentCommand, IRespondent } from '@/modules/respondent/domain';
 import { randomUUID } from 'crypto';
+import { IRespondent } from '@/models/respondent/respondent.interface';
 
-export class RespondentAggregate
-  extends RespondentCommand
-  implements IRespondent
-{
+export class RespondentAggregate implements IRespondent {
   @IsString()
   uuid = randomUUID();
 
@@ -57,10 +54,6 @@ export class RespondentAggregate
 
   @IsDate()
   updatedAt = new Date();
-
-  private constructor() {
-    super();
-  }
 
   static create(data: Partial<IRespondent> = {}) {
     const _respondent = new RespondentAggregate();

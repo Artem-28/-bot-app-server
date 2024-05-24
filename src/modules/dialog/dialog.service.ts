@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Server } from 'socket.io';
 import { DialogRepository } from '@/repositories/dialog';
-import { RespondentService } from '@/modules/respondent/respondent.service';
+import { RespondentService } from '@/modules/respondent/service/respondent.service';
 import { StartDto } from '@/modules/dialog/dto';
 import { ScriptRepository } from '@/repositories/script';
 import { CommonError } from '@/common/error';

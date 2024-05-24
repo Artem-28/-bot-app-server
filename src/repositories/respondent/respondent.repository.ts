@@ -3,10 +3,13 @@ import { BaseRepository } from '@/repositories/base.repository';
 import { DataSource } from 'typeorm';
 import { REQUEST } from '@nestjs/core';
 import { RespondentRepositoryDomain } from '@/repositories/respondent/respondent-repository.domain';
-import { IRespondent, RespondentAggregate } from '@/modules/respondent/domain';
-import { RespondentEntity } from '@/entities';
 import { FilterDto } from '@/common/dto';
 import { HQueryBuilder } from '@/common/utils';
+import {
+  IRespondent,
+  RespondentAggregate,
+  RespondentEntity,
+} from '@/models/respondent';
 
 @Injectable()
 export class RespondentRepository

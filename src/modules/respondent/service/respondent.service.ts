@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { RespondentRepository } from '@/repositories/respondent';
 import { ProjectRepository } from '@/repositories/project';
 import { CommonError } from '@/common/error';
-import { RespondentAggregate } from '@/modules/respondent/domain/respondent.aggregate';
-import { CreateRespondentDto } from '@/modules/respondent/dto';
+import { RespondentAggregate } from '@/models/respondent/respondent.aggregate';
+import { CreateRespondentDto } from '@/modules/respondent/service';
 
 @Injectable()
 export class RespondentService {

@@ -1,11 +1,9 @@
 import { UUID } from 'crypto';
+import { IBase } from '@/models/base';
 
-export interface IRespondent {
+export interface IRespondent extends IBase {
   /** Идентификатор респондента */
   uuid: UUID;
-
-  /** Идентификатор респондента */
-  id?: number;
 
   /** Идентификатор проекта к которому пренадлежит респондент */
   projectId: number;
@@ -24,10 +22,4 @@ export interface IRespondent {
 
   /** Телефон респондента */
   phone: string | null;
-
-  /** Дата создания респондента */
-  createdAt: Date;
-
-  /** Дата обновления респондента */
-  updatedAt: Date;
 }

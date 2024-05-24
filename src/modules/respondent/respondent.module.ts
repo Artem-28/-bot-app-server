@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { RespondentService } from './respondent.service';
-import { RespondentController } from '@/api/v1/respondent';
+import { RespondentService } from './service/respondent.service';
+import { RespondentController } from '@/modules/respondent/controller';
 import { RespondentRepository } from '@/repositories/respondent';
 import { ProjectRepository } from '@/repositories/project';
 
