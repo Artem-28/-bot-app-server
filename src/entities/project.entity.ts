@@ -4,6 +4,7 @@ import {
   UserEntity,
   ScriptEntity,
   RespondentEntity,
+  DialogEntity,
 } from '@/entities';
 
 export const PROJECT_TABLE = 'projects';
@@ -25,4 +26,7 @@ export class ProjectEntity extends BaseEntity {
 
   @OneToMany(() => RespondentEntity, (respondent) => respondent.project)
   public respondents: RespondentEntity[];
+
+  @OneToMany(() => DialogEntity, (dialog) => dialog.project)
+  public dialogs: DialogEntity[];
 }

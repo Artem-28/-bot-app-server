@@ -1,6 +1,5 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { BaseEntity } from '@/entities/base.entity';
-import { ProjectEntity } from '@/entities/project.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { BaseEntity, ProjectEntity, DialogEntity } from '@/entities';
 
 export const SCRIPT_TABLE = 'scripts';
 
@@ -17,4 +16,7 @@ export class ScriptEntity extends BaseEntity {
   })
   @JoinColumn({ name: 'project_id' })
   public project: ProjectEntity;
+
+  @OneToMany(() => DialogEntity, (dialog) => dialog.project)
+  public dialogs: DialogEntity[];
 }

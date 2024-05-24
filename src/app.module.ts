@@ -8,6 +8,7 @@ import { ProjectModule } from './modules/project/project.module';
 import { CheckPermissionModule } from '@/providers/permission';
 import { ScriptModule } from './modules/script/script.module';
 import { RespondentModule } from './modules/respondent/respondent.module';
+import { DialogModule } from './modules/dialog/dialog.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { RespondentModule } from './modules/respondent/respondent.module';
     CheckPermissionModule,
     ScriptModule,
     RespondentModule,
+    DialogModule,
   ],
 })
 export class AppModule {}
