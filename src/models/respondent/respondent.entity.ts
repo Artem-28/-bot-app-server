@@ -1,8 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
-import { DialogEntity } from '@/entities';
 import { UUID } from 'crypto';
 import { ProjectEntity } from '@/models/project';
 import { BaseEntity } from '@/models/base';
+import { ChatEntity } from '@/models/chat';
 
 export const RESPONDENT_TABLE = 'respondents';
 
@@ -35,6 +35,6 @@ export class RespondentEntity extends BaseEntity {
   @JoinColumn({ name: 'project_id' })
   public project: ProjectEntity;
 
-  @OneToMany(() => DialogEntity, (dialog) => dialog.project)
-  public dialogs: DialogEntity[];
+  @OneToMany(() => ChatEntity, (chat) => chat.project)
+  public chats: ChatEntity[];
 }

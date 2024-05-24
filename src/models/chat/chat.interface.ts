@@ -1,7 +1,6 @@
-export interface IDialog {
-  /** Идентификатор диалога */
-  id?: number;
+import { IBase } from '@/models/base';
 
+export interface IChat extends IBase {
   /** Идентификатор проекта к которому привязан диалог */
   projectId: number;
 
@@ -10,10 +9,4 @@ export interface IDialog {
 
   /** Идентификатор респондента к которому привязан диалог */
   respondentId: number;
-
-  /** Дата создания диалога */
-  createdAt: Date;
-
-  /** Дата обновления диалога */
-  updatedAt: Date;
 }

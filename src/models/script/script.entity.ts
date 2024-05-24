@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
-import { DialogEntity } from '@/entities';
 import { ProjectEntity } from '@/models/project';
 import { BaseEntity } from '@/models/base';
+import { ChatEntity } from '@/models/chat';
 
 export const SCRIPT_TABLE = 'scripts';
 
@@ -19,6 +19,6 @@ export class ScriptEntity extends BaseEntity {
   @JoinColumn({ name: 'project_id' })
   public project: ProjectEntity;
 
-  @OneToMany(() => DialogEntity, (dialog) => dialog.project)
-  public dialogs: DialogEntity[];
+  @OneToMany(() => ChatEntity, (chat) => chat.script)
+  public chats: ChatEntity[];
 }

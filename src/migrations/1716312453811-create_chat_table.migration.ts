@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, TableForeignKey } from 'typeorm';
 import { hCreateTable } from '@/common/utils';
-import { DIALOG_TABLE } from '@/entities';
 import { PROJECT_TABLE } from '@/models/project';
 import { SCRIPT_TABLE } from '@/models/script';
 import { RESPONDENT_TABLE } from '@/models/respondent';
+import { CHAT_TABLE } from '@/models/chat';
 
-const table = hCreateTable(DIALOG_TABLE, [
+const table = hCreateTable(CHAT_TABLE, [
   {
     name: 'project_id',
     type: 'int',
@@ -22,21 +22,21 @@ const table = hCreateTable(DIALOG_TABLE, [
 
 const foreignKeys = [
   new TableForeignKey({
-    name: 'fk_dialog_project',
+    name: 'fk_chat_project',
     columnNames: ['project_id'],
     referencedColumnNames: ['id'],
     referencedTableName: PROJECT_TABLE,
     onDelete: 'CASCADE',
   }),
   new TableForeignKey({
-    name: 'fk_dialog_script',
+    name: 'fk_chat_script',
     columnNames: ['script_id'],
     referencedColumnNames: ['id'],
     referencedTableName: SCRIPT_TABLE,
     onDelete: 'CASCADE',
   }),
   new TableForeignKey({
-    name: 'fk_dialog_respondent',
+    name: 'fk_chat_respondent',
     columnNames: ['respondent_id'],
     referencedColumnNames: ['id'],
     referencedTableName: RESPONDENT_TABLE,
@@ -44,7 +44,7 @@ const foreignKeys = [
   }),
 ];
 
-export class CreateDialogTable1716312453811 implements MigrationInterface {
+export class CreateChatTable1716312453811 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(table, true);
     await queryRunner.createForeignKeys(table, foreignKeys);

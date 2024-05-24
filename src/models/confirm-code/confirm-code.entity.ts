@@ -9,7 +9,11 @@ export class ConfirmCodeEntity extends BaseEntity {
   @Column()
   value: string;
 
-  @Column({ type: 'enum', enum: ConfirmCodeTypeEnum })
+  @Column({
+    type: 'enum',
+    enum: ConfirmCodeTypeEnum,
+    enumName: 'confirm_code_type',
+  })
   type: ConfirmCodeTypeEnum;
 
   @Column()

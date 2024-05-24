@@ -6,10 +6,9 @@ import {
   validateSync,
 } from 'class-validator';
 import { DomainError } from '@/common/error';
-import { DialogCommand } from '@/modules/dialog/domain/dialog.command';
-import { IDialog } from '@/modules/dialog/domain/dialog.interface';
+import { IChat } from '@/models/chat/chat.interface';
 
-export class DialogAggregate extends DialogCommand implements IDialog {
+export class ChatAggregate implements IChat {
   @IsOptional()
   @IsNumber()
   id?: number;
@@ -32,22 +31,18 @@ export class DialogAggregate extends DialogCommand implements IDialog {
   @IsDate()
   updatedAt = new Date();
 
-  private constructor() {
-    super();
-  }
-
-  static create(data: Partial<IDialog>) {
-    const _dialog = new DialogAggregate();
-    Object.assign(_dialog, data);
-    _dialog.updatedAt = data?.id ? new Date() : _dialog.updatedAt;
-    const errors = validateSync(_dialog, { whitelist: true });
+  static create(data: Partial<IChat>) {
+    const _chat = new ChatAggregate();
+    Object.assign(_chat, data);
+    _chat.updatedAt = data?.id ? new Date() : _chat.updatedAt;
+    const errors = validateSync(_chat, { whitelist: true });
     if (!!errors.length) {
       throw new DomainError(errors, { message: 'Dialog not valid ' });
     }
-    return _dialog;
+    return _chat;
   }
 
-  get instance(): IDialog {
+  get instance(): IChat {
     return {
       projectId: this.projectId,
       scriptId: this.scriptId,

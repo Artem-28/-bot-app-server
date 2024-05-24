@@ -39,7 +39,7 @@ class Respondent {
   phone?: string;
 }
 
-export class StartDto {
+export class CreateChatDto {
   @IsDefined()
   @IsNumber()
   scriptId: number;

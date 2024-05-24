@@ -1,23 +1,21 @@
 import { Module } from '@nestjs/common';
-import { DialogService } from './dialog.service';
-import { DialogController } from '@/api/v1/dialog/dialog.controller';
-import { DialogRepository } from '@/repositories/dialog';
+import { ChatRepository } from '@/repositories/chat';
 import { RespondentService } from '@/modules/respondent/service/respondent.service';
 import { RespondentRepository } from '@/repositories/respondent';
 import { ProjectRepository } from '@/repositories/project';
 import { ScriptRepository } from '@/repositories/script';
-import { DialogGateway } from '@/api/geteway/dialog/dialog.gateway';
+import { ChatService } from '@/modules/chat/service';
+import { ChatController } from '@/modules/chat/controller';
 
 @Module({
   providers: [
-    DialogService,
+    ChatService,
     RespondentService,
-    DialogRepository,
+    ChatRepository,
     RespondentRepository,
     ProjectRepository,
     ScriptRepository,
-    DialogGateway,
   ],
-  controllers: [DialogController],
+  controllers: [ChatController],
 })
-export class DialogModule {}
+export class ChatModule {}

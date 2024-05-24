@@ -1,17 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { Server } from 'socket.io';
-import { DialogRepository } from '@/repositories/dialog';
+import { ChatRepository } from '@/repositories/chat';
 import { RespondentService } from '@/modules/respondent/service/respondent.service';
-import { StartDto } from '@/modules/dialog/dto';
 import { ScriptRepository } from '@/repositories/script';
 import { CommonError } from '@/common/error';
-import { DialogAggregate } from '@/modules/dialog/domain';
 import { RespondentRepository } from '@/repositories/respondent';
+import { ChatAggregate } from '@/models/chat';
+import { CreateChatDto } from '@/modules/chat/service';
 
 @Injectable()
-export class DialogService {
+export class ChatService {
   constructor(
-    private readonly _dialogRepository: DialogRepository,
+    private readonly _chatRepository: ChatRepository,
     private readonly _respondentRepository: RespondentRepository,
     private readonly _scriptRepository: ScriptRepository,
     private readonly _respondentService: RespondentService,
@@ -53,7 +52,7 @@ export class DialogService {
       respondentId: respondent.id,
     };
 
-    const dialog = await this._dialogRepository.getOne([
+    const dialog = await this._chatRepository.getOne([
       { field: 'projectId', value: dto.projectId },
       { field: 'scriptId', value: dto.scriptId },
       { field: 'respondentId', value: dto.respondentId },
@@ -61,11 +60,11 @@ export class DialogService {
 
     if (dialog) return dialog;
 
-    const newDialog = DialogAggregate.create(dto);
-    return await this._dialogRepository.create(newDialog.instance);
+    const newDialog = ChatAggregate.create(dto);
+    return await this._chatRepository.create(newDialog.instance);
   }
 
-  public async start(dto: StartDto) {
+  public async start(dto: CreateChatDto) {
     const script = await this._scriptRepository.getOne({
       field: 'id',
       value: dto.scriptId,
@@ -87,18 +86,16 @@ export class DialogService {
       respondentId: respondent.id,
     };
 
-    let dialog = await this._dialogRepository.getOne([
+    let dialog = await this._chatRepository.getOne([
       { field: 'projectId', value: dialogDto.projectId },
       { field: 'scriptId', value: dialogDto.scriptId },
       { field: 'respondentId', value: dialogDto.respondentId },
     ]);
 
     if (!dialog) {
-      const newDialog = DialogAggregate.create(dialogDto);
-      dialog = await this._dialogRepository.create(newDialog.instance);
+      const newDialog = ChatAggregate.create(dialogDto);
+      dialog = await this._chatRepository.create(newDialog.instance);
     }
     return dialog;
-
-    // return this.startServer(dialog);
   }
 }
