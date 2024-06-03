@@ -18,6 +18,10 @@ const table = hCreateTable(CHAT_TABLE, [
     name: 'respondent_id',
     type: 'int',
   },
+  {
+    name: 'key',
+    type: 'varchar',
+  },
 ]);
 
 const foreignKeys = [

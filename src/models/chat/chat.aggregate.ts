@@ -3,15 +3,22 @@ import {
   IsDefined,
   IsNumber,
   IsOptional,
+  IsString,
   validateSync,
 } from 'class-validator';
 import { DomainError } from '@/common/error';
 import { IChat } from '@/models/chat/chat.interface';
+import { Exclude } from 'class-transformer';
 
 export class ChatAggregate implements IChat {
   @IsOptional()
   @IsNumber()
   id?: number;
+
+  @IsString()
+  @IsDefined()
+  @Exclude()
+  key: string;
 
   @IsDefined()
   @IsNumber()
@@ -44,6 +51,7 @@ export class ChatAggregate implements IChat {
 
   get instance(): IChat {
     return {
+      key: this.key,
       projectId: this.projectId,
       scriptId: this.scriptId,
       respondentId: this.respondentId,

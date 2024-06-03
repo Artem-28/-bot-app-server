@@ -1,13 +1,17 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { ProjectEntity } from '@/models/project';
 import { ScriptEntity } from '@/models/script';
 import { RespondentEntity } from '@/models/respondent';
 import { BaseEntity } from '@/models/base';
+import { ChatClientEntity } from '@/models/chat';
 
 export const CHAT_TABLE = 'chats';
 
 @Entity({ name: CHAT_TABLE })
 export class ChatEntity extends BaseEntity {
+  @Column()
+  key: string;
+
   @Column({ name: 'project_id' })
   projectId: number;
 
@@ -29,9 +33,10 @@ export class ChatEntity extends BaseEntity {
   @JoinColumn({ name: 'script_id' })
   public script: ScriptEntity;
 
-  @ManyToOne(() => RespondentEntity, (respondent) => respondent.chats, {
-    onDelete: 'CASCADE',
-  })
+  @ManyToOne(() => RespondentEntity, (respondent) => respondent.chats)
   @JoinColumn({ name: 'respondent_id' })
   public respondent: RespondentEntity;
+
+  @OneToMany(() => ChatClientEntity, (chatClient) => chatClient.chat)
+  public clients: ChatClientEntity[];
 }

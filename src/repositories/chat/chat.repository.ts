@@ -5,14 +5,21 @@ import { REQUEST } from '@nestjs/core';
 import { FilterDto } from '@/common/dto';
 import { HQueryBuilder } from '@/common/utils';
 import { ChatRepositoryDomain } from '@/repositories/chat';
-import { ChatAggregate, ChatEntity, IChat } from '@/models/chat';
+import {
+  ChatAggregate,
+  ChatClientAggregate,
+  ChatClientEntity,
+  ChatEntity,
+  IChat,
+  IChatClient,
+} from '@/models/chat';
 
 @Injectable()
 export class ChatRepository
   extends BaseRepository
   implements ChatRepositoryDomain
 {
-  constructor(dataSource: DataSource, @Inject(REQUEST) request: Request) {
+  constructor(dataSource: DataSource, @Inject(REQUEST) request?: Request) {
     super(dataSource, request);
   }
 
@@ -30,5 +37,10 @@ export class ChatRepository
     const result = await query.builder.getOne();
     if (!result) return null;
     return ChatAggregate.create(result);
+  }
+
+  public async joinClient(client: IChatClient): Promise<ChatClientAggregate> {
+    const result = await this.getRepository(ChatClientEntity).save(client);
+    return ChatClientAggregate.create(result);
   }
 }

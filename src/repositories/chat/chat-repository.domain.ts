@@ -1,5 +1,10 @@
 import { FilterDto } from '@/common/dto';
-import { ChatAggregate, IChat } from '@/models/chat';
+import {
+  ChatAggregate,
+  ChatClientAggregate,
+  IChat,
+  IChatClient,
+} from '@/models/chat';
 
 export abstract class ChatRepositoryDomain {
   abstract create(dialog: IChat): Promise<ChatAggregate>;
@@ -7,4 +12,6 @@ export abstract class ChatRepositoryDomain {
   abstract getOne(
     filter: FilterDto<IChat> | FilterDto<IChat>[],
   ): Promise<ChatAggregate | null>;
+
+  abstract joinClient(client: IChatClient): Promise<ChatClientAggregate>;
 }

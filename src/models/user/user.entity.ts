@@ -8,27 +8,27 @@ export const USER_TABLE = 'users';
 @Entity({ name: USER_TABLE })
 export class UserEntity extends BaseEntity {
   @Column()
-  email: string;
+  public email: string;
 
   @Column()
   @Exclude()
-  password: string;
+  public password: string;
 
   @Column({ nullable: true })
-  phone: string;
+  public phone: string;
 
   @Column({ name: 'license_agreement' })
-  licenseAgreement: boolean;
+  public licenseAgreement: boolean;
 
   @Column({ name: 'email_verified_at', nullable: true })
-  emailVerifiedAt: Date;
+  public emailVerifiedAt: Date;
 
   @Column({ name: 'phone_verified_at', nullable: true })
-  phoneVerifiedAt: Date;
+  public phoneVerifiedAt: Date;
 
   @Column({ name: 'last_active_at', nullable: true })
-  lastActiveAt: Date;
+  public lastActiveAt: Date;
 
   @OneToMany(() => ProjectEntity, (project) => project.user)
-  projects: ProjectEntity[];
+  public projects: ProjectEntity[];
 }

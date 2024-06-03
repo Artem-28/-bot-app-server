@@ -1,1 +1,2 @@
-export * from './create-chat.dto';
+export * from './start-data.dto';
+export * from './connect.dto';

@@ -6,6 +6,7 @@ import { ProjectRepository } from '@/repositories/project';
 import { ScriptRepository } from '@/repositories/script';
 import { ChatService } from '@/modules/chat/service';
 import { ChatController } from '@/modules/chat/controller';
+import { ChatGateway } from '@/modules/chat/gateway/chat.gateway';
 
 @Module({
   providers: [
@@ -15,6 +16,7 @@ import { ChatController } from '@/modules/chat/controller';
     RespondentRepository,
     ProjectRepository,
     ScriptRepository,
+    ChatGateway,
   ],
   controllers: [ChatController],
 })

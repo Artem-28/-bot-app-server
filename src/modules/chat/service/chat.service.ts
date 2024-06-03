@@ -1,70 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ChatRepository } from '@/repositories/chat';
-import { RespondentService } from '@/modules/respondent/service/respondent.service';
 import { ScriptRepository } from '@/repositories/script';
 import { CommonError } from '@/common/error';
 import { RespondentRepository } from '@/repositories/respondent';
-import { ChatAggregate } from '@/models/chat';
-import { CreateChatDto } from '@/modules/chat/service';
+import { ChatAggregate, ChatClientAggregate } from '@/models/chat';
+import { ConnectRespondentDto, StartDataDto } from '@/modules/chat/service';
+import { JwtService } from '@nestjs/jwt';
+import { hGenerateCode } from '@/common/utils';
+import * as bcrypt from 'bcrypt';
+import { RespondentToken } from '@/common/types';
 
 @Injectable()
 export class ChatService {
   constructor(
+    private readonly _jwtService: JwtService,
     private readonly _chatRepository: ChatRepository,
-    private readonly _respondentRepository: RespondentRepository,
     private readonly _scriptRepository: ScriptRepository,
-    private readonly _respondentService: RespondentService,
+    private readonly _respondentRepository: RespondentRepository,
   ) {}
 
-  public async getConnectionDialog(scriptId: number, respondentId: number) {
-    const script = await this._scriptRepository.getOne({
-      field: 'id',
-      value: scriptId,
-    });
-    if (!script) {
-      throw new CommonError(
-        { field: null, ctx: 'app', message: 'errors.script.not_found' },
-        404,
-      );
-    }
-
-    let respondent = await this._respondentRepository.getOne({
-      field: 'id',
-      value: respondentId,
-    });
-    if (!respondent) {
-      throw new CommonError(
-        { field: null, ctx: 'app', message: 'errors.respondent.not_found' },
-        404,
-      );
-    }
-
-    if (respondent.projectId !== script.projectId) {
-      respondent = await this._respondentRepository.create({
-        ...respondent.instance,
-        projectId: script.projectId,
-      });
-    }
-
-    const dto = {
-      projectId: script.projectId,
-      scriptId: script.id,
-      respondentId: respondent.id,
-    };
-
-    const dialog = await this._chatRepository.getOne([
-      { field: 'projectId', value: dto.projectId },
-      { field: 'scriptId', value: dto.scriptId },
-      { field: 'respondentId', value: dto.respondentId },
-    ]);
-
-    if (dialog) return dialog;
-
-    const newDialog = ChatAggregate.create(dto);
-    return await this._chatRepository.create(newDialog.instance);
-  }
-
-  public async start(dto: CreateChatDto) {
+  public async getStartData(dto: StartDataDto) {
     const script = await this._scriptRepository.getOne({
       field: 'id',
       value: dto.scriptId,
@@ -75,27 +30,92 @@ export class ChatService {
         404,
       );
     }
-    const respondent = await this._respondentService.create({
-      projectId: script.projectId,
-      ...dto.respondent,
-    });
 
-    const dialogDto = {
+    const respondent = await this._respondentRepository.getOne([
+      { field: 'id', value: dto.respondentId },
+      { field: 'projectId', value: script.projectId },
+    ]);
+    if (!respondent) {
+      throw new CommonError(
+        { field: null, ctx: 'app', message: 'errors.respondent.not_found' },
+        404,
+      );
+    }
+
+    const keyValue = hGenerateCode('******-******-******-******-******-******');
+    const key = await bcrypt.hash(keyValue, 10);
+
+    const instance = ChatAggregate.create({
       projectId: script.projectId,
       scriptId: script.id,
       respondentId: respondent.id,
+      key,
+    }).instance;
+
+    const chat = await this._chatRepository.create(instance);
+
+    return {
+      secretKey: keyValue,
+      chat,
     };
+  }
 
-    let dialog = await this._chatRepository.getOne([
-      { field: 'projectId', value: dialogDto.projectId },
-      { field: 'scriptId', value: dialogDto.scriptId },
-      { field: 'respondentId', value: dialogDto.respondentId },
-    ]);
+  public async getToken(chatId: number, key: string) {
+    const chat = await this._chatRepository.getOne({
+      field: 'id',
+      value: chatId,
+    });
 
-    if (!dialog) {
-      const newDialog = ChatAggregate.create(dialogDto);
-      dialog = await this._chatRepository.create(newDialog.instance);
+    const keyMatch = await bcrypt.compare(key, chat.key);
+    if (!keyMatch) {
+      throw new CommonError({
+        field: null,
+        ctx: 'app',
+        message: 'errors.chat.token',
+      });
     }
-    return dialog;
+
+    return this._jwtService.sign({
+      chatId: chat.id,
+      respondentId: chat.respondentId,
+    });
+  }
+
+  public async connectRespondent(dto: ConnectRespondentDto) {
+    if (dto.chatId !== dto.token.chatId) {
+      throw new UnauthorizedException();
+    }
+
+    const chat = await this._chatRepository.getOne({
+      field: 'id',
+      value: dto.chatId,
+    });
+    if (!chat) {
+      throw new CommonError({
+        field: null,
+        ctx: 'app',
+        message: 'error.chat.not_found',
+      });
+    }
+
+    const respondent = await this._respondentRepository.getOne([
+      { field: 'id', value: dto.token.respondentId },
+      { field: 'projectId', value: chat.projectId },
+    ]);
+    if (!respondent) {
+      throw new CommonError({
+        field: null,
+        ctx: 'app',
+        message: 'error.respondent.not_found',
+      });
+    }
+
+    const client = ChatClientAggregate.create({
+      chatId: chat.id,
+      socketId: dto.socketId,
+      respondentId: respondent.id,
+    });
+
+    return await this._chatRepository.joinClient(client.instance);
   }
 }
