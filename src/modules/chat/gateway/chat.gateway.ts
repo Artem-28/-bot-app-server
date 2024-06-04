@@ -1,7 +1,9 @@
 import {
+  OnGatewayConnection,
+  OnGatewayDisconnect,
+  SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  OnGatewayConnection,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { ChatRepository } from '@/repositories/chat';
@@ -10,12 +12,11 @@ import { ChatService } from '@/modules/chat/service';
 import { JwtService } from '@nestjs/jwt';
 import { ScriptRepository } from '@/repositories/script';
 import { RespondentRepository } from '@/repositories/respondent';
-import { UnauthorizedException } from '@nestjs/common';
 import { CommonError } from '@/common/error';
-import {RespondentToken} from "@/common/types";
+import { UserRepository } from '@/repositories/user';
 
 @WebSocketGateway()
-export class ChatGateway implements OnGatewayConnection {
+export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 
@@ -28,11 +29,13 @@ export class ChatGateway implements OnGatewayConnection {
     const chatRepository = new ChatRepository(_dataSource);
     const scriptRepository = new ScriptRepository(_dataSource);
     const respondentRepository = new RespondentRepository(_dataSource);
+    const userRepository = new UserRepository(_dataSource);
     this._chatService = new ChatService(
       _jwtService,
       chatRepository,
       scriptRepository,
       respondentRepository,
+      userRepository,
     );
   }
 
@@ -52,20 +55,33 @@ export class ChatGateway implements OnGatewayConnection {
       const { authorization, id } = socket.handshake.headers;
       const token = await this._jwtService.verifyAsync(authorization);
 
-      const isRespondent = 'respondentId' in token;
-      const chatId = Number(id);
-      if (isRespondent) {
-        await this._chatService.connectRespondent({
-          socketId: socket.id,
-          chatId,
-          token,
-        });
-      }
+      socket.data.client = await this._chatService.connectClient({
+        socketId: socket.id,
+        chatId: Number(id),
+        token,
+      });
     } catch (error) {
       console.log(error);
       socket.emit('Error', error);
       return socket.disconnect();
     }
-    // console.log('connected...', this._chatService);
+  }
+
+  async handleDisconnect(socket: Socket) {
+    const success = await this._chatService.disconnectClient(socket.id);
+    if (!success) return;
+    socket.disconnect();
+    console.log('DISCONNECT ....');
+  }
+
+  @SubscribeMessage('sendMessage')
+  async onSendMessage(socket: Socket, dto: any) {
+    const currentClient = socket.data.client;
+    const clients = await this._chatService.getClientsByChatId(
+      currentClient.chatId,
+    );
+    clients.forEach((client) => {
+      this.server.to(client.socketId).emit('onMessage', dto);
+    });
   }
 }

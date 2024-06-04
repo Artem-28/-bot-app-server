@@ -12,7 +12,7 @@ export class UserRepository
   extends BaseRepository
   implements UserRepositoryDomain
 {
-  constructor(dataSource: DataSource, @Inject(REQUEST) request: Request) {
+  constructor(dataSource: DataSource, @Inject(REQUEST) request?: Request) {
     super(dataSource, request);
   }
 

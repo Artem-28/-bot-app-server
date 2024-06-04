@@ -23,8 +23,8 @@ export class ChatRepository
     super(dataSource, request);
   }
 
-  public async create(data: IChat): Promise<ChatAggregate> {
-    const result = await this.getRepository(ChatEntity).save(data);
+  public async create(chat: IChat): Promise<ChatAggregate> {
+    const result = await this.getRepository(ChatEntity).save(chat);
     return ChatAggregate.create(result);
   }
 
@@ -39,8 +39,31 @@ export class ChatRepository
     return ChatAggregate.create(result);
   }
 
-  public async joinClient(client: IChatClient): Promise<ChatClientAggregate> {
+  public async connectClient(
+    client: IChatClient,
+  ): Promise<ChatClientAggregate> {
     const result = await this.getRepository(ChatClientEntity).save(client);
     return ChatClientAggregate.create(result);
+  }
+
+  public async disconnectClient(socketId: string): Promise<boolean> {
+    const result = await this.getRepository(ChatClientEntity)
+      .createQueryBuilder()
+      .delete()
+      .where({ socketId })
+      .execute();
+
+    return !!result.affected;
+  }
+
+  public async getClients(
+    filter: FilterDto<IChatClient> | FilterDto<IChatClient>[],
+  ): Promise<ChatClientAggregate[]> {
+    const repository = this.getRepository(ChatClientEntity);
+    const query = new HQueryBuilder(repository, { filter: filter });
+
+    const result = await query.builder.getMany();
+    if (!result) return null;
+    return result.map((item) => ChatClientAggregate.create(item));
   }
 }

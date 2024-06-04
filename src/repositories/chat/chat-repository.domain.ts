@@ -7,11 +7,15 @@ import {
 } from '@/models/chat';
 
 export abstract class ChatRepositoryDomain {
-  abstract create(dialog: IChat): Promise<ChatAggregate>;
+  abstract create(chat: IChat): Promise<ChatAggregate>;
 
   abstract getOne(
     filter: FilterDto<IChat> | FilterDto<IChat>[],
   ): Promise<ChatAggregate | null>;
 
-  abstract joinClient(client: IChatClient): Promise<ChatClientAggregate>;
+  abstract connectClient(client: IChatClient): Promise<ChatClientAggregate>;
+  abstract disconnectClient(socketId: string): Promise<boolean>;
+  abstract getClients(
+    filter: FilterDto<IChatClient> | FilterDto<IChatClient>[],
+  ): Promise<ChatClientAggregate[]>;
 }

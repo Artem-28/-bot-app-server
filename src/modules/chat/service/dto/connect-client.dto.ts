@@ -1,7 +1,7 @@
 import { IsDefined, IsString } from 'class-validator';
-import { RespondentToken } from '@/common/types';
+import { AuthToken, RespondentToken } from '@/common/types';
 
-export class ConnectRespondentDto {
+export class ConnectClientDto {
   @IsDefined()
   @IsString()
   chatId: number;
@@ -11,5 +11,5 @@ export class ConnectRespondentDto {
   socketId: string;
 
   @IsDefined()
-  token: RespondentToken;
+  token: AuthToken | RespondentToken;
 }

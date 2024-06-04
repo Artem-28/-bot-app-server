@@ -3,12 +3,12 @@ import { ChatRepository } from '@/repositories/chat';
 import { ScriptRepository } from '@/repositories/script';
 import { CommonError } from '@/common/error';
 import { RespondentRepository } from '@/repositories/respondent';
-import { ChatAggregate, ChatClientAggregate } from '@/models/chat';
-import { ConnectRespondentDto, StartDataDto } from '@/modules/chat/service';
+import { ChatAggregate, ChatClientAggregate, IChatClient } from '@/models/chat';
+import { ConnectClientDto, StartDataDto } from '@/modules/chat/service';
 import { JwtService } from '@nestjs/jwt';
 import { hGenerateCode } from '@/common/utils';
 import * as bcrypt from 'bcrypt';
-import { RespondentToken } from '@/common/types';
+import { UserRepository } from '@/repositories/user';
 
 @Injectable()
 export class ChatService {
@@ -17,6 +17,7 @@ export class ChatService {
     private readonly _chatRepository: ChatRepository,
     private readonly _scriptRepository: ScriptRepository,
     private readonly _respondentRepository: RespondentRepository,
+    private readonly _userRepository: UserRepository,
   ) {}
 
   public async getStartData(dto: StartDataDto) {
@@ -81,8 +82,8 @@ export class ChatService {
     });
   }
 
-  public async connectRespondent(dto: ConnectRespondentDto) {
-    if (dto.chatId !== dto.token.chatId) {
+  public async connectClient(dto: ConnectClientDto) {
+    if ('chatId' in dto.token && dto.chatId !== dto.token.chatId) {
       throw new UnauthorizedException();
     }
 
@@ -90,6 +91,7 @@ export class ChatService {
       field: 'id',
       value: dto.chatId,
     });
+
     if (!chat) {
       throw new CommonError({
         field: null,
@@ -98,24 +100,45 @@ export class ChatService {
       });
     }
 
-    const respondent = await this._respondentRepository.getOne([
-      { field: 'id', value: dto.token.respondentId },
-      { field: 'projectId', value: chat.projectId },
-    ]);
-    if (!respondent) {
+    const clientDto: Partial<IChatClient> = {
+      chatId: chat.id,
+      socketId: dto.socketId,
+    };
+    if ('respondentId' in dto.token) {
+      const respondent = await this._respondentRepository.getOne([
+        { field: 'id', value: dto.token.respondentId },
+        { field: 'projectId', value: chat.projectId },
+      ]);
+      clientDto.respondentId = respondent?.id;
+    } else {
+      const user = await this._userRepository.getOne({
+        field: 'id',
+        value: dto.token.id,
+      });
+      clientDto.userId = user?.id;
+    }
+
+    if (!clientDto.userId && !clientDto.respondentId) {
       throw new CommonError({
         field: null,
         ctx: 'app',
-        message: 'error.respondent.not_found',
+        message: 'error.chat.client_not_found',
       });
     }
 
-    const client = ChatClientAggregate.create({
-      chatId: chat.id,
-      socketId: dto.socketId,
-      respondentId: respondent.id,
-    });
+    const client = ChatClientAggregate.create(clientDto);
 
-    return await this._chatRepository.joinClient(client.instance);
+    return await this._chatRepository.connectClient(client.instance);
+  }
+
+  public async disconnectClient(socketId: string) {
+    return await this._chatRepository.disconnectClient(socketId);
+  }
+
+  public async getClientsByChatId(chatId: number) {
+    return await this._chatRepository.getClients({
+      field: 'chatId',
+      value: chatId,
+    });
   }
 }
