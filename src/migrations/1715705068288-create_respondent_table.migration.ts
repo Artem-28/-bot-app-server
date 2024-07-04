@@ -1,6 +1,12 @@
-import {MigrationInterface, QueryRunner, TableForeignKey, TableIndex} from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  TableForeignKey,
+  TableIndex,
+} from 'typeorm';
 import { hCreateTable } from '@/common/utils';
-import { PROJECT_TABLE, RESPONDENT_TABLE } from '@/entities';
+import { PROJECT_TABLE } from '@/models/project';
+import { RESPONDENT_TABLE } from '@/models/respondent';
 
 const table = hCreateTable(RESPONDENT_TABLE, [
   {

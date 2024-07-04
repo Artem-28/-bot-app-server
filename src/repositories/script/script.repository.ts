@@ -5,15 +5,14 @@ import { REQUEST } from '@nestjs/core';
 import { FilterDto } from '@/common/dto';
 import { HQueryBuilder } from '@/common/utils';
 import { ScriptRepositoryDomain } from '@/repositories/script/script-repository.domain';
-import { IScript, ScriptAggregate } from '@/modules/script/domain';
-import { ScriptEntity } from '@/entities';
+import { IScript, ScriptAggregate, ScriptEntity } from '@/models/script';
 
 @Injectable()
 export class ScriptRepository
   extends BaseRepository
   implements ScriptRepositoryDomain
 {
-  constructor(dataSource: DataSource, @Inject(REQUEST) request: Request) {
+  constructor(dataSource: DataSource, @Inject(REQUEST) request?: Request) {
     super(dataSource, request);
   }
 

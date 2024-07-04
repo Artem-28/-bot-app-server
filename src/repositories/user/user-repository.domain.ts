@@ -1,5 +1,5 @@
-import { IUser, UserAggregate } from '@/modules/user/domain';
 import { FilterDto } from '@/common/dto';
+import { IUser, UserAggregate } from '@/models/user';
 
 export abstract class UserRepositoryDomain {
   abstract create(user: IUser): Promise<UserAggregate>;

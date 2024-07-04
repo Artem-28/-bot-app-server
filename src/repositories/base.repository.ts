@@ -9,7 +9,8 @@ export class BaseRepository {
 
   protected getRepository<T>(entityCls: new () => T): Repository<T> {
     const entityManager: EntityManager =
-      this._request[ENTITY_MANAGER_KEY] ?? this._dataSource.manager;
+      (this._request && this._request[ENTITY_MANAGER_KEY]) ??
+      this._dataSource.manager;
     return entityManager.getRepository(entityCls);
   }
 }

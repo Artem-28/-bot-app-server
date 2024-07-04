@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import { hCreateTable } from '@/common/utils';
-import { USER_TABLE } from '@/entities';
+import { USER_TABLE } from '@/models/user';
 
 const table = hCreateTable(USER_TABLE, [
   {

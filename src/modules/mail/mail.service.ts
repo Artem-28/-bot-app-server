@@ -1,11 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
-import {
-  ConfirmCodeTypeEnum,
-  IConfirmCode,
-} from '@/modules/confirm-code/domain';
 import { CommonError } from '@/common/error';
+import { ConfirmCodeTypeEnum, IConfirmCode } from '@/models/confirm-code';
 
 @Injectable()
 export class MailService {

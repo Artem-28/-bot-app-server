@@ -2,18 +2,17 @@ import { Inject, Injectable } from '@nestjs/common';
 import { BaseRepository } from '@/repositories/base.repository';
 import { DataSource } from 'typeorm';
 import { REQUEST } from '@nestjs/core';
-import { UserEntity } from '@/entities';
 import { UserRepositoryDomain } from '@/repositories/user';
-import { IUser, UserAggregate } from '@/modules/user/domain';
 import { FilterDto } from '@/common/dto';
 import { HQueryBuilder } from '@/common/utils';
+import { IUser, UserAggregate, UserEntity } from '@/models/user';
 
 @Injectable()
 export class UserRepository
   extends BaseRepository
   implements UserRepositoryDomain
 {
-  constructor(dataSource: DataSource, @Inject(REQUEST) request: Request) {
+  constructor(dataSource: DataSource, @Inject(REQUEST) request?: Request) {
     super(dataSource, request);
   }
 

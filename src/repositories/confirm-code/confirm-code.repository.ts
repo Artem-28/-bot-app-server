@@ -1,15 +1,15 @@
 import { Inject, Injectable, Scope } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { REQUEST } from '@nestjs/core';
-import { ConfirmCodeEntity } from '@/entities';
 import { ConfirmCodeRepositoryDomain } from '@/repositories/confirm-code';
 import { BaseRepository } from '@/repositories/base.repository';
+import { HQueryBuilder } from '@/common/utils';
+import { FilterDto } from '@/common/dto';
 import {
   ConfirmCodeAggregate,
   IConfirmCode,
-} from '@/modules/confirm-code/domain';
-import { HQueryBuilder } from '@/common/utils';
-import { FilterDto } from '@/common/dto';
+  ConfirmCodeEntity,
+} from '@/models/confirm-code';
 
 @Injectable({ scope: Scope.REQUEST })
 export class ConfirmCodeRepository

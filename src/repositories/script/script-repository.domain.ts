@@ -1,5 +1,5 @@
 import { FilterDto } from '@/common/dto';
-import { IScript, ScriptAggregate } from '@/modules/script/domain';
+import { IScript, ScriptAggregate } from '@/models/script';
 
 export abstract class ScriptRepositoryDomain {
   abstract create(script: IScript): Promise<ScriptAggregate>;

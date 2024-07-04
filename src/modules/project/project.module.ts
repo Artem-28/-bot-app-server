@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ProjectService } from './project.service';
-import { ProjectController } from '@/api/v1/project';
+import { ProjectController } from '@/modules/project/controller';
+import { ProjectService } from '@/modules/project/service';
 import { ProjectRepository } from '@/repositories/project';
 
 @Module({
